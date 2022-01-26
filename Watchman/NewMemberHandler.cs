@@ -62,6 +62,11 @@ namespace Watchman
 
                 await PostLogAsync(arg, "Staff bypass kekw");
 
+                ShittyDB.Modify(x =>
+                {
+                    x?.Pending.RemoveAll(y => y.UserId == arg.Id);
+                    x?.Approved.Add(new Verification() { Reason = "Staff bypass kekw", UserId = arg.Id, VerifiedBy = _client.CurrentUser.Id });
+                });
                 return;
             }
 
